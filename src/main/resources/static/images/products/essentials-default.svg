@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" fill="none">
+  <rect width="600" height="420" fill="#F4F6F8"/>
+  <circle cx="485" cy="95" r="105" fill="#D1FAE5" opacity="0.6"/>
+  <circle cx="115" cy="330" r="85" fill="#E2E8F0" opacity="0.6"/>
+  <ellipse cx="300" cy="356" rx="135" ry="15" fill="#0F172A" opacity="0.08"/>
+  <!-- Spiral Notebook -->
+  <rect x="200" y="76" width="176" height="248" rx="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="3"/>
+  <rect x="200" y="76" width="24" height="248" rx="4" fill="#059669"/>
+  <!-- Spiral Rings -->
+  <g stroke="#0F172A" stroke-width="3" stroke-linecap="round">
+    <line x1="192" y1="100" x2="212" y2="100"/>
+    <line x1="192" y1="130" x2="212" y2="130"/>
+    <line x1="192" y1="160" x2="212" y2="160"/>
+    <line x1="192" y1="190" x2="212" y2="190"/>
+    <line x1="192" y1="220" x2="212" y2="220"/>
+    <line x1="192" y1="250" x2="212" y2="250"/>
+    <line x1="192" y1="280" x2="212" y2="280"/>
+  </g>
+  <!-- Notebook Content -->
+  <rect x="242" y="108" width="112" height="42" rx="6" fill="#ECFDF5" stroke="#34D399" stroke-width="1.5"/>
+  <text x="298" y="133" text-anchor="middle" fill="#065F46" font-family="system-ui, sans-serif" font-size="12" font-weight="700">LAB MANUAL</text>
+  <line x1="242" y1="176" x2="354" y2="176" stroke="#CBD5E1" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="242" y1="202" x2="354" y2="202" stroke="#CBD5E1" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="242" y1="228" x2="324" y2="228" stroke="#CBD5E1" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Pen beside notebook -->
+  <rect x="396" y="110" width="16" height="190" rx="8" fill="#1E293B"/>
+  <path d="M396 300 L404 324 L412 300 Z" fill="#059669"/>
+  <rect x="412" y="128" width="5" height="48" rx="2.5" fill="#10B981"/>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" fill="none">
+  <rect width="600" height="420" fill="#F4F6F9"/>
+  <circle cx="480" cy="95" r="105" fill="#D1FAE5" opacity="0.6"/>
+  <circle cx="110" cy="330" r="85" fill="#E2E8F0" opacity="0.6"/>
+  <ellipse cx="300" cy="356" rx="140" ry="15" fill="#0F172A" opacity="0.08"/>
+  <!-- Drawing Board / Sheet -->
+  <rect x="160" y="96" width="280" height="210" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="3"/>
+  <rect x="176" y="112" width="248" height="178" rx="4" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <!-- Set Square / Triangle -->
+  <path d="M210 264 L350 264 L210 144 Z" fill="#10B981" fill-opacity="0.22" stroke="#059669" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M232 246 L296 246 L232 190 Z" fill="#FFFFFF" stroke="#059669" stroke-width="2"/>
+  <!-- Mini Drafter Arm & Scale -->
+  <line x1="185" y1="108" x2="310" y2="180" stroke="#334155" stroke-width="5" stroke-linecap="round"/>
+  <line x1="195" y1="122" x2="320" y2="194" stroke="#64748B" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="190" cy="115" r="14" fill="#0F172A"/>
+  <circle cx="315" cy="187" r="16" fill="#059669" stroke="#FFFFFF" stroke-width="3"/>
+  <!-- L-Scale -->
+  <path d="M315 187 L405 187 L405 203 L331 203 L331 268 L315 268 Z" fill="#1E293B"/>
+</svg>

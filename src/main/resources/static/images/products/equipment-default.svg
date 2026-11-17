@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" fill="none">
+  <rect width="600" height="420" fill="#F4F6F9"/>
+  <circle cx="485" cy="95" r="105" fill="#D1FAE5" opacity="0.6"/>
+  <circle cx="115" cy="330" r="85" fill="#E2E8F0" opacity="0.6"/>
+  <ellipse cx="300" cy="356" rx="145" ry="15" fill="#0F172A" opacity="0.08"/>
+  <!-- PCB Board -->
+  <rect x="175" y="102" width="250" height="196" rx="14" fill="#065F46" stroke="#047857" stroke-width="4"/>
+  <!-- Mounting Holes -->
+  <circle cx="195" cy="122" r="6" fill="#F8FAFC"/>
+  <circle cx="405" cy="122" r="6" fill="#F8FAFC"/>
+  <circle cx="195" cy="278" r="6" fill="#F8FAFC"/>
+  <circle cx="405" cy="278" r="6" fill="#F8FAFC"/>
+  <!-- USB Port -->
+  <rect x="158" y="166" width="32" height="44" rx="4" fill="#CBD5E1" stroke="#64748B" stroke-width="2"/>
+  <!-- Microcontroller IC -->
+  <rect x="255" y="164" width="110" height="58" rx="6" fill="#1E293B" stroke="#0F172A" stroke-width="2"/>
+  <text x="310" y="197" text-anchor="middle" fill="#34D399" font-family="monospace" font-size="13" font-weight="700">ATmega328P</text>
+  <!-- IC Pins -->
+  <g fill="#CBD5E1">
+    <rect x="266" y="152" width="6" height="12"/>
+    <rect x="282" y="152" width="6" height="12"/>
+    <rect x="298" y="152" width="6" height="12"/>
+    <rect x="314" y="152" width="6" height="12"/>
+    <rect x="330" y="152" width="6" height="12"/>
+    <rect x="346" y="152" width="6" height="12"/>
+    <rect x="266" y="222" width="6" height="12"/>
+    <rect x="282" y="222" width="6" height="12"/>
+    <rect x="298" y="222" width="6" height="12"/>
+    <rect x="314" y="222" width="6" height="12"/>
+    <rect x="330" y="222" width="6" height="12"/>
+    <rect x="346" y="222" width="6" height="12"/>
+  </g>
+  <!-- Header Strips -->
+  <rect x="225" y="116" width="160" height="14" rx="3" fill="#0F172A"/>
+  <rect x="225" y="270" width="160" height="14" rx="3" fill="#0F172A"/>
+</svg>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Error')}"></head>
+<body style="background-color: var(--bg-secondary);">
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-5">
+                <div class="swaped-card p-4 p-md-5 text-center">
+                    <div class="font-mono-code fw-bold text-secondary mb-2" th:text="${statusCode != null ? 'HTTP ' + statusCode : 'SWAPED NOTICE'}">HTTP 404</div>
+                    <h3 class="fw-bold mb-2" th:text="${errorTitle != null ? errorTitle : 'Something went wrong'}">Page Not Found</h3>
+                    <p class="text-secondary small mb-4" th:text="${errorMessage != null ? errorMessage : 'The requested resource could not be found or completed.'}">
+                        Error description
+                    </p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a th:href="@{/marketplace}" class="btn btn-emerald">Go to Marketplace</a>
+                        <a th:href="@{/}" class="btn btn-soft">Back Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>

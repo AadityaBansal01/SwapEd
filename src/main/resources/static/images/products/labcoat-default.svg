@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" fill="none">
+  <rect width="600" height="420" fill="#F4F6F8"/>
+  <circle cx="485" cy="95" r="105" fill="#D1FAE5" opacity="0.6"/>
+  <circle cx="115" cy="325" r="95" fill="#E2E8F0" opacity="0.6"/>
+  <ellipse cx="300" cy="356" rx="130" ry="15" fill="#0F172A" opacity="0.08"/>
+  <!-- Lab Coat Silhouette -->
+  <path d="M235 86 L268 72 L300 112 L332 72 L365 86 L422 152 L390 182 L362 145 L362 336 L238 336 L238 145 L210 182 L178 152 Z" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Lapels -->
+  <path d="M268 72 L300 156 L252 128 Z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="2"/>
+  <path d="M332 72 L300 156 L348 128 Z" fill="#F8FAFC" stroke="#94A3B8" stroke-width="2"/>
+  <!-- Center Seam & Buttons -->
+  <line x1="300" y1="156" x2="300" y2="336" stroke="#CBD5E1" stroke-width="2"/>
+  <circle cx="300" cy="186" r="4.5" fill="#059669"/>
+  <circle cx="300" cy="222" r="4.5" fill="#059669"/>
+  <circle cx="300" cy="258" r="4.5" fill="#059669"/>
+  <!-- Breast Pocket with Thapar Emblem -->
+  <rect x="316" y="156" width="32" height="36" rx="4" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.8"/>
+  <rect x="322" y="146" width="6" height="12" rx="2" fill="#059669"/>
+  <rect x="332" y="148" width="6" height="10" rx="2" fill="#0F172A"/>
+  <!-- Side Pockets -->
+  <rect x="248" y="246" width="36" height="40" rx="4" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.8"/>
+  <rect x="316" y="246" width="36" height="40" rx="4" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.8"/>
+</svg>

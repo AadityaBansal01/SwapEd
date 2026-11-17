@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" fill="none">
+  <rect width="600" height="420" fill="#F4F7F5"/>
+  <circle cx="480" cy="80" r="110" fill="#E6F4EA" opacity="0.7"/>
+  <circle cx="120" cy="340" r="90" fill="#E8EEF2" opacity="0.6"/>
+  <!-- Shadow -->
+  <ellipse cx="300" cy="348" rx="135" ry="16" fill="#0F172A" opacity="0.08"/>
+  <!-- Back Book -->
+  <rect x="195" y="78" width="190" height="250" rx="10" transform="rotate(-6 195 78)" fill="#064E3B"/>
+  <rect x="208" y="88" width="168" height="230" rx="6" transform="rotate(-6 208 88)" fill="#047857"/>
+  <!-- Front Book Cover -->
+  <rect x="210" y="76" width="196" height="256" rx="10" fill="#059669"/>
+  <rect x="210" y="76" width="24" height="256" rx="6" fill="#065F46"/>
+  <!-- Book Pages Edge -->
+  <rect x="400" y="84" width="10" height="240" rx="3" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.5"/>
+  <!-- Cover Typography & Graphics -->
+  <rect x="252" y="106" width="84" height="22" rx="11" fill="#ECFDF5"/>
+  <text x="294" y="121" text-anchor="middle" fill="#065F46" font-family="system-ui, sans-serif" font-size="11" font-weight="700">THAPAR EDITION</text>
+  <text x="252" y="162" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="20" font-weight="800">ENGINEERING</text>
+  <text x="252" y="188" fill="#A7F3D0" font-family="system-ui, sans-serif" font-size="18" font-weight="700">TEXTBOOK</text>
+  <line x1="252" y1="206" x2="376" y2="206" stroke="#34D399" stroke-width="2"/>
+  <!-- Geometric emblem -->
+  <circle cx="314" cy="258" r="32" stroke="#A7F3D0" stroke-width="2" fill="#047857"/>
+  <path d="M298 266 L314 238 L330 266 Z" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+  <circle cx="314" cy="258" r="6" fill="#ECFDF5"/>
+</svg>

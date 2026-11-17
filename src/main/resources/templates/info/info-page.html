@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${pageTitle})}"></head>
+<body style="background-color: var(--bg-secondary);">
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="swaped-card p-4 p-md-5">
+                    <span class="text-uppercase fw-bold small" style="color: var(--emerald-600); letter-spacing: 0.06em;">SwapEd Campus Platform</span>
+                    <h2 class="fw-bold mt-1 mb-4" th:text="${pageTitle}">Information</h2>
+
+                    <!-- ABOUT -->
+                    <div th:if="${pageSection == 'about'}">
+                        <p class="text-secondary">
+                            <strong>SwapEd — Campus Student Book &amp; Gear Exchange</strong> is a peer-to-peer academic marketplace engineered exclusively for students of Thapar Institute of Engineering &amp; Technology (TIET), Patiala.
+                        </p>
+                        <p class="text-secondary">
+                            Our mission is to solve a recurring student challenge: the high cost of single-semester textbooks, lab coats, mini drafters, and scientific calculators. By connecting seniors and juniors within a verified <code>@thapar.edu</code> network, SwapEd enables zero-commission campus pickups and sustainable resource reuse.
+                        </p>
+                        <div class="p-4 rounded-3 border bg-light mt-4">
+                            <h6 class="fw-bold mb-2">Project Engineering Team — BrewCoders (Group 3C54)</h6>
+                            <ul class="mb-0 small text-secondary">
+                                <li><strong>Aaditya Bansal</strong> (Roll No: <code>1024030768</code>)</li>
+                                <li><strong>Aayati Kalra</strong> (Roll No: <code>1024030783</code>)</li>
+                                <li><strong>Rishita Jain</strong> (Roll No: <code>1024030782</code>)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- CONTACT -->
+                    <div th:if="${pageSection == 'contact'}">
+                        <p class="text-secondary">
+                            Need assistance with your Thapar student verification, a marketplace listing, or a reservation dispute? Reach out to the SwapEd Campus Support team:
+                        </p>
+                        <div class="row g-3 mt-2">
+                            <div class="col-md-6">
+                                <div class="p-3 rounded-3 border bg-white">
+                                    <div class="fw-bold small">Student Helpdesk Email</div>
+                                    <div class="font-mono-code text-success small mt-1">support@swaped.thapar.edu</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 rounded-3 border bg-white">
+                                    <div class="fw-bold small">Campus Team Office</div>
+                                    <div class="text-secondary small mt-1">CSED Block, TIET Campus, Patiala — 147004</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- HELP -->
+                    <div th:if="${pageSection == 'help'}">
+                        <h6 class="fw-bold">1. How do I verify my @thapar.edu account?</h6>
+                        <p class="text-secondary small mb-3">
+                            Register using your official Thapar email address (e.g., <code>rjain1_be24@thapar.edu</code>). Click the single-use verification link sent to your email to activate your account.
+                        </p>
+                        <h6 class="fw-bold">2. How do reservations and trades work?</h6>
+                        <p class="text-secondary small mb-3">
+                            Click <strong>Reserve for Pickup</strong> on any available item. The seller receives your request in their dashboard and can accept or decline it. Once accepted, the item is marked <strong>Reserved</strong> while you meet at the listed campus pickup spot. After handover, the seller clicks <strong>Confirm Handover</strong> to record the completed trade.
+                        </p>
+                        <h6 class="fw-bold">3. Can I cancel a reservation?</h6>
+                        <p class="text-secondary small mb-0">
+                            Yes. Both buyers and sellers can cancel a pending or accepted reservation prior to handover, which automatically restores the listing to <strong>Available</strong> status.
+                        </p>
+                    </div>
+
+                    <!-- PRIVACY -->
+                    <div th:if="${pageSection == 'privacy'}">
+                        <p class="text-secondary small">
+                            SwapEd collects only essential student identity details (Full Name, official <code>@thapar.edu</code> email address, Roll Number, Department, and Course) required to verify Thapar campus membership and facilitate safe peer-to-peer exchanges.
+                        </p>
+                        <p class="text-secondary small mb-0">
+                            All passwords are encrypted using salted <strong>BCrypt</strong> hashes. Verification and password reset tokens are stored exclusively as <strong>SHA-256</strong> cryptographic hashes and are never exposed in plain text in the database.
+                        </p>
+                    </div>
+
+                    <!-- TERMS -->
+                    <div th:if="${pageSection == 'terms'}">
+                        <ul class="text-secondary small d-flex flex-column gap-2 mb-0">
+                            <li>Only currently enrolled Thapar University students with a valid <code>@thapar.edu</code> email may register, list, or reserve items.</li>
+                            <li>All item condition ratings (New, Like New, Good, Fair) must accurately describe the physical state of the textbook or equipment.</li>
+                            <li>Exchanges must take place in public campus areas (Central Library, COS Complex, Academic Blocks, or Hostel Gates) during daylight/campus hours.</li>
+                            <li>Students may only modify or delete their own listings and may not reserve their own items.</li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-top">
+                        <a th:href="@{/marketplace}" class="btn btn-emerald btn-sm">Explore Marketplace</a>
+                        <a th:href="@{/}" class="btn btn-soft btn-sm ms-1">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>

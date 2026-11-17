@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" fill="none">
+  <rect width="600" height="420" fill="#F3F5F8"/>
+  <circle cx="490" cy="95" r="105" fill="#E0E7FF" opacity="0.5"/>
+  <circle cx="110" cy="330" r="85" fill="#D1FAE5" opacity="0.5"/>
+  <ellipse cx="300" cy="348" rx="135" ry="15" fill="#0F172A" opacity="0.08"/>
+  <!-- Book -->
+  <rect x="200" y="72" width="204" height="260" rx="10" fill="#1E293B"/>
+  <rect x="200" y="72" width="26" height="260" rx="6" fill="#0F172A"/>
+  <rect x="244" y="102" width="90" height="22" rx="11" fill="#10B981"/>
+  <text x="289" y="117" text-anchor="middle" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="11" font-weight="700">CSE / COE CORE</text>
+  <text x="244" y="156" fill="#F8FAFC" font-family="system-ui, sans-serif" font-size="19" font-weight="800">ALGORITHMS</text>
+  <text x="244" y="180" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="15" font-weight="600">&amp; DATA STRUCTURES</text>
+  <!-- Binary tree diagram -->
+  <line x1="310" y1="226" x2="276" y2="262" stroke="#34D399" stroke-width="2.5"/>
+  <line x1="310" y1="226" x2="344" y2="262" stroke="#34D399" stroke-width="2.5"/>
+  <line x1="276" y1="262" x2="258" y2="292" stroke="#34D399" stroke-width="2"/>
+  <line x1="276" y1="262" x2="294" y2="292" stroke="#34D399" stroke-width="2"/>
+  <circle cx="310" cy="226" r="11" fill="#10B981"/>
+  <circle cx="276" cy="262" r="9" fill="#38BDF8"/>
+  <circle cx="344" cy="262" r="9" fill="#38BDF8"/>
+  <circle cx="258" cy="292" r="7" fill="#F8FAFC"/>
+  <circle cx="294" cy="292" r="7" fill="#F8FAFC"/>
+</svg>
