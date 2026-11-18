@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Student Registration')}"></head>
+<body style="background-color: var(--bg-secondary);">
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<div th:replace="~{fragments/layout :: alerts}"></div>
+
+<main class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="swaped-card p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <span class="brand-mark mb-3" style="width: 44px; height: 44px; font-size: 1.2rem;">S</span>
+                        <h2 class="fw-bold mb-1" style="letter-spacing: -0.02em;">Create Student Account</h2>
+                        <p class="text-secondary small mb-0">
+                            Exclusively for Thapar University students using an official <code>@thapar.edu</code> email.
+                        </p>
+                    </div>
+
+                    <form th:action="@{/auth/register}" th:object="${registrationDto}" method="post" novalidate>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="regFullName" class="form-label">Full Name</label>
+                                <input type="text" id="regFullName" th:field="*{fullName}"
+                                       class="form-control" th:classappend="${#fields.hasErrors('fullName')} ? 'is-invalid'"
+                                       placeholder="Rishita Jain" required>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="regCollegeId" class="form-label">Student ID / Roll No</label>
+                                <input type="text" id="regCollegeId" th:field="*{collegeId}"
+                                       class="form-control font-mono-code" th:classappend="${#fields.hasErrors('collegeId')} ? 'is-invalid'"
+                                       placeholder="1024030782" required>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('collegeId')}" th:errors="*{collegeId}"></div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="regEmail" class="form-label">Thapar Email Address</label>
+                                <input type="email" id="regEmail" th:field="*{email}"
+                                       class="form-control" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
+                                       placeholder="rjain1_be24@thapar.edu" required>
+                                <div class="form-text small">Only <code>@thapar.edu</code> addresses are accepted. Non-Thapar domains are rejected.</div>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="regDepartment" class="form-label">Department</label>
+                                <select id="regDepartment" th:field="*{department}"
+                                        class="form-select" th:classappend="${#fields.hasErrors('department')} ? 'is-invalid'" required>
+                                    <option value="">Select Department</option>
+                                    <option value="Computer Science & Engineering (CSED)">Computer Science &amp; Engineering (CSED)</option>
+                                    <option value="Electronics & Communication (ECED)">Electronics &amp; Communication (ECED)</option>
+                                    <option value="Mechanical Engineering (MED)">Mechanical Engineering (MED)</option>
+                                    <option value="Electrical & Instrumentation (EIED)">Electrical &amp; Instrumentation (EIED)</option>
+                                    <option value="Chemical Engineering (CHED)">Chemical Engineering (CHED)</option>
+                                    <option value="Civil Engineering (CED)">Civil Engineering (CED)</option>
+                                    <option value="Biotechnology (DBT)">Biotechnology (DBT)</option>
+                                </select>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('department')}" th:errors="*{department}"></div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="regCourse" class="form-label">Course / Program</label>
+                                <select id="regCourse" th:field="*{course}"
+                                        class="form-select" th:classappend="${#fields.hasErrors('course')} ? 'is-invalid'" required>
+                                    <option value="">Select Course</option>
+                                    <option value="B.E. Computer Engineering">B.E. Computer Engineering (COE)</option>
+                                    <option value="B.E. Computer Science & Engineering">B.E. Computer Science &amp; Engineering (COPC)</option>
+                                    <option value="B.E. Computer Science & Business Systems">B.E. Computer Science &amp; Business Systems</option>
+                                    <option value="B.E. Electronics & Communication">B.E. Electronics &amp; Communication (ECE)</option>
+                                    <option value="B.E. Electronics & Computer">B.E. Electronics &amp; Computer (ENC)</option>
+                                    <option value="B.E. Mechanical Engineering">B.E. Mechanical Engineering (MEE)</option>
+                                    <option value="B.E. Electrical & Computer Engineering">B.E. Electrical &amp; Computer Engineering</option>
+                                    <option value="B.E. Chemical Engineering">B.E. Chemical Engineering</option>
+                                    <option value="M.E. / M.Tech / MCA">M.E. / M.Tech / MCA</option>
+                                </select>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('course')}" th:errors="*{course}"></div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="regPassword" class="form-label">Password</label>
+                                <div class="input-group">
+                                    <input type="password" id="regPassword" th:field="*{password}"
+                                           class="form-control" th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"
+                                           placeholder="Min. 8 characters" required>
+                                    <button type="button" class="btn btn-soft border" data-toggle-password="regPassword" style="font-size: 0.8rem;">Show</button>
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="regConfirmPassword" class="form-label">Confirm Password</label>
+                                <div class="input-group">
+                                    <input type="password" id="regConfirmPassword" th:field="*{confirmPassword}"
+                                           class="form-control" th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'"
+                                           placeholder="Repeat password" required>
+                                    <button type="button" class="btn btn-soft border" data-toggle-password="regConfirmPassword" style="font-size: 0.8rem;">Show</button>
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-emerald w-100 py-2 mt-4">
+                            Register &amp; Send Verification <i class="bi bi-arrow-right ms-1"></i>
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-4 pt-3 border-top small text-secondary">
+                        Already have a verified Thapar account?
+                        <a th:href="@{/auth/login}" class="fw-semibold text-decoration-none ms-1" style="color: var(--emerald-600);">Sign In</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>

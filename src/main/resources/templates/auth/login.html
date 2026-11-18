@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Sign In')}"></head>
+<body style="background-color: var(--bg-secondary);">
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<div th:replace="~{fragments/layout :: alerts}"></div>
+
+<main class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-5">
+                <div class="swaped-card p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <span class="brand-mark mb-3" style="width: 44px; height: 44px; font-size: 1.2rem;">S</span>
+                        <h2 class="fw-bold mb-1" style="letter-spacing: -0.02em;">Welcome Back!</h2>
+                        <p class="text-secondary small mb-0">Sign in with your Thapar student account.</p>
+                    </div>
+
+                    <!-- Invalid Credentials Error -->
+                    <div th:if="${loginError}" class="alert alert-danger rounded-3 small py-2 px-3 mb-3 border-0" style="background-color: #FEF2F2; color: #991B1B;">
+                        <i class="bi bi-exclamation-circle-fill me-1"></i>
+                        Invalid Thapar email address or password. Please try again.
+                    </div>
+
+                    <!-- Unverified Account Warning + Resend Form -->
+                    <div th:if="${unverifiedError}" class="alert alert-warning rounded-3 small p-3 mb-3 border-0" style="background-color: #FFFBEB; color: #92400E;">
+                        <div class="fw-bold mb-1"><i class="bi bi-envelope-exclamation-fill me-1"></i>Email Verification Required</div>
+                        <p class="mb-2">Your Thapar account has not been activated yet. Please verify your email before logging in.</p>
+                        <form th:action="@{/auth/resend-verification}" method="post" class="d-inline">
+                            <input type="hidden" name="email" th:value="${prefillEmail}">
+                            <button type="submit" class="btn btn-sm btn-warning fw-semibold">Resend Verification Link</button>
+                        </form>
+                    </div>
+
+                    <form th:action="@{/auth/login}" method="post">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Thapar Email Address</label>
+                            <input type="email" id="loginEmail" name="email" class="form-control"
+                                   placeholder="rjain1_be24@thapar.edu"
+                                   th:value="${prefillEmail}" required autofocus>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <label for="loginPassword" class="form-label mb-0">Password</label>
+                                <a th:href="@{/auth/forgot-password}" class="small text-decoration-none fw-medium" style="color: var(--emerald-600);">Forgot Password?</a>
+                            </div>
+                            <div class="input-group">
+                                <input type="password" id="loginPassword" name="password" class="form-control" placeholder="Enter your password" required>
+                                <button type="button" class="btn btn-soft border" data-toggle-password="loginPassword" style="font-size: 0.82rem;">Show</button>
+                            </div>
+                        </div>
+
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" name="remember-me" id="rememberMeCheck">
+                            <label class="form-check-label small text-secondary" for="rememberMeCheck">
+                                Remember me for 7 days
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-emerald w-100 py-2">
+                            Sign In <i class="bi bi-arrow-right ms-1"></i>
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-4 pt-3 border-top small text-secondary">
+                        New to SwapEd?
+                        <a th:href="@{/auth/register}" class="fw-semibold text-decoration-none ms-1" style="color: var(--emerald-600);">Create Account</a>
+                    </div>
+                </div>
+
+                <!-- Sample Student Accounts Helper for Project Demonstration -->
+                <div class="swaped-card p-3 mt-3 bg-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="small fw-semibold text-secondary">
+                            <i class="bi bi-mortarboard-fill text-success me-1"></i>Sample Student Accounts (Unique Passwords)
+                        </span>
+                        <button class="btn btn-link btn-sm text-decoration-none p-0 small" type="button" data-bs-toggle="collapse" data-bs-target="#demoCredsCollapse" style="color: var(--emerald-600);">
+                            Quick Fill <i class="bi bi-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="collapse show mt-2 pt-2 border-top" id="demoCredsCollapse">
+                        <div class="d-flex flex-wrap gap-1">
+                            <button type="button" class="btn btn-soft btn-sm py-1 px-2" style="font-size: 0.76rem;"
+                                    data-demo-email="rjain1_be24@thapar.edu" data-demo-pass="Rishita@2026">
+                                Rishita (<code>rjain1_be24@thapar.edu</code>)
+                            </button>
+                            <button type="button" class="btn btn-soft btn-sm py-1 px-2" style="font-size: 0.76rem;"
+                                    data-demo-email="abansal_be24@thapar.edu" data-demo-pass="Aaditya@2026">
+                                Aaditya (<code>abansal_be24@thapar.edu</code>)
+                            </button>
+                            <button type="button" class="btn btn-soft btn-sm py-1 px-2" style="font-size: 0.76rem;"
+                                    data-demo-email="akalra_be24@thapar.edu" data-demo-pass="Aayati@2026">
+                                Aayati (<code>akalra_be24@thapar.edu</code>)
+                            </button>
+                            <button type="button" class="btn btn-soft btn-sm py-1 px-2" style="font-size: 0.76rem;"
+                                    data-demo-email="mkaur_be24@thapar.edu" data-demo-pass="Mehak@2026">
+                                Mehak (<code>mkaur_be24@thapar.edu</code>)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head('Your Campus. Your Marketplace.')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<div th:replace="~{fragments/layout :: alerts}"></div>
+
+<div th:if="${param.logout}" class="container mt-3">
+    <div class="alert alert-success alert-dismissible fade show rounded-3 border-0 shadow-sm" role="alert" style="background-color: #ECFDF5; color: #065F46;">
+        <i class="bi bi-check-circle-fill me-2"></i>You have been securely logged out of SwapEd.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+
+<main>
+    <!-- ======================================================================
+         1. HERO SECTION
+         ====================================================================== -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center gy-5">
+                <div class="col-lg-6">
+                    <div class="hero-eyebrow">
+                        <i class="bi bi-patch-check-fill"></i>
+                        <span>Exclusively for Thapar University Students (@thapar.edu)</span>
+                    </div>
+                    <h1 class="hero-title">Your Campus.<br><span style="color: var(--emerald-600);">Your Marketplace.</span></h1>
+                    <p class="hero-subtitle">
+                        Buy, sell, and exchange academic essentials with fellow Thapar students. Save money, reuse resources, and make campus life easier.
+                    </p>
+
+                    <div class="d-flex flex-wrap gap-3 mb-4">
+                        <a th:href="@{/marketplace}" class="btn btn-emerald btn-lg px-4">
+                            <i class="bi bi-compass me-2"></i>Explore Marketplace
+                        </a>
+                        <a th:href="@{/listings/new}" class="btn btn-soft btn-lg px-4">
+                            <i class="bi bi-plus-lg me-2 text-success"></i>Sell an Item
+                        </a>
+                    </div>
+
+                    <!-- Quick Course & Keyword Search Bar -->
+                    <form th:action="@{/marketplace}" method="get" class="mt-4">
+                        <div class="input-group shadow-sm rounded-3 overflow-hidden border" style="max-width: 520px; border-color: var(--border-soft) !important;">
+                            <span class="input-group-text bg-white border-0 text-secondary ps-3">
+                                <i class="bi bi-search"></i>
+                            </span>
+                            <input type="text" name="q" class="form-control border-0 shadow-none py-2" placeholder="Search textbooks, lab coats, course codes (e.g. UCS301)...">
+                            <button class="btn btn-dark-green px-4 border-0" type="submit">Search</button>
+                        </div>
+                    </form>
+
+                    <div class="d-flex flex-wrap align-items-center gap-2 mt-3 small text-secondary">
+                        <span>Popular Courses:</span>
+                        <a th:href="@{/marketplace(q='UCS301')}" class="course-pill text-decoration-none">UCS301</a>
+                        <a th:href="@{/marketplace(q='UMA010')}" class="course-pill text-decoration-none">UMA010</a>
+                        <a th:href="@{/marketplace(q='UTA015')}" class="course-pill text-decoration-none">UTA015</a>
+                        <a th:href="@{/marketplace(q='UCH101')}" class="course-pill text-decoration-none">UCH101</a>
+                        <a th:href="@{/marketplace(q='UPH004')}" class="course-pill text-decoration-none">UPH004</a>
+                    </div>
+                </div>
+
+                <!-- Modern Product Showcase Grid -->
+                <div class="col-lg-6">
+                    <div class="hero-showcase-card">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge rounded-pill" style="background-color: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0;">
+                                    <i class="bi bi-lightning-charge-fill me-1"></i>Live Campus Exchange
+                                </span>
+                                <span class="text-secondary small">Verified Student Gear</span>
+                            </div>
+                            <span class="font-mono-code small text-secondary">TIET Patiala</span>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <div class="showcase-mini-card h-100">
+                                    <div class="rounded-3 overflow-hidden mb-2 border" style="height: 120px; background: #F4F7F5;">
+                                        <img th:src="@{/images/products/textbook-dsa.svg}" alt="Textbooks" class="w-100 h-100 object-fit-cover">
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="course-pill">UCS301</span>
+                                        <span class="swaped-badge badge-condition-likenew">Like New</span>
+                                    </div>
+                                    <div class="fw-bold small mt-2 text-truncate">CLRS Algorithms 3rd Ed</div>
+                                    <div class="d-flex justify-content-between align-items-baseline mt-1">
+                                        <span class="price-current fs-6">₹480</span>
+                                        <span class="text-secondary" style="font-size: 0.75rem;"><i class="bi bi-geo-alt me-1"></i>Central Library</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="showcase-mini-card h-100">
+                                    <div class="rounded-3 overflow-hidden mb-2 border" style="height: 120px; background: #F4F6F8;">
+                                        <img th:src="@{/images/products/labcoat-default.svg}" alt="Lab Coats" class="w-100 h-100 object-fit-cover">
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="course-pill">UCH101</span>
+                                        <span class="swaped-badge badge-condition-likenew">Like New</span>
+                                    </div>
+                                    <div class="fw-bold small mt-2 text-truncate">Cotton White Lab Coat (L)</div>
+                                    <div class="d-flex justify-content-between align-items-baseline mt-1">
+                                        <span class="price-current fs-6">₹220</span>
+                                        <span class="text-secondary" style="font-size: 0.75rem;"><i class="bi bi-geo-alt me-1"></i>G-Block</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="showcase-mini-card h-100">
+                                    <div class="rounded-3 overflow-hidden mb-2 border" style="height: 120px; background: #F4F6F9;">
+                                        <img th:src="@{/images/products/drafting-default.svg}" alt="Drafting Kit" class="w-100 h-100 object-fit-cover">
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="course-pill">UTA015</span>
+                                        <span class="swaped-badge badge-condition-good">Good</span>
+                                    </div>
+                                    <div class="fw-bold small mt-2 text-truncate">Omega Mini Drafter &amp; Tube</div>
+                                    <div class="d-flex justify-content-between align-items-baseline mt-1">
+                                        <span class="price-current fs-6">₹420</span>
+                                        <span class="text-secondary" style="font-size: 0.75rem;"><i class="bi bi-geo-alt me-1"></i>Workshop</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="showcase-mini-card h-100">
+                                    <div class="rounded-3 overflow-hidden mb-2 border" style="height: 120px; background: #F4F6F8;">
+                                        <img th:src="@{/images/products/calculator-default.svg}" alt="Calculator" class="w-100 h-100 object-fit-cover">
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="course-pill">UMA011</span>
+                                        <span class="swaped-badge badge-condition-likenew">Like New</span>
+                                    </div>
+                                    <div class="fw-bold small mt-2 text-truncate">Casio fx-991CW ClassWiz</div>
+                                    <div class="d-flex justify-content-between align-items-baseline mt-1">
+                                        <span class="price-current fs-6">₹850</span>
+                                        <span class="text-secondary" style="font-size: 0.75rem;"><i class="bi bi-geo-alt me-1"></i>LT-101</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================================
+         2. FEATURED CATEGORIES SECTION
+         ====================================================================== -->
+    <section id="categories" class="py-5" style="background-color: var(--bg-secondary); border-bottom: 1px solid var(--border-soft);">
+        <div class="container py-2">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4">
+                <div>
+                    <span class="text-uppercase fw-bold small" style="color: var(--emerald-600); letter-spacing: 0.06em;">Curated Departments</span>
+                    <h2 class="fw-bold mt-1 mb-0" style="letter-spacing: -0.02em;">Featured Categories</h2>
+                </div>
+                <a th:href="@{/marketplace}" class="text-decoration-none fw-semibold small mt-2 mt-md-0" style="color: var(--emerald-700);">
+                    View all categories <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
+
+            <div class="row g-3 g-lg-4">
+                <div class="col-6 col-md-4 col-lg-2" th:each="cat : ${categories}">
+                    <a th:href="@{/marketplace(categoryId=${cat.categoryId})}" class="category-card">
+                        <div>
+                            <div class="category-icon-box">
+                                <i th:if="${#strings.containsIgnoreCase(cat.categoryName, 'Textbook')}" class="bi bi-journal-bookmark-fill"></i>
+                                <i th:if="${#strings.containsIgnoreCase(cat.categoryName, 'Lab')}" class="bi bi-shield-plus"></i>
+                                <i th:if="${#strings.containsIgnoreCase(cat.categoryName, 'Drawing')}" class="bi bi-rulers"></i>
+                                <i th:if="${#strings.containsIgnoreCase(cat.categoryName, 'Equipment')}" class="bi bi-cpu"></i>
+                                <i th:if="${#strings.containsIgnoreCase(cat.categoryName, 'Calculator')}" class="bi bi-calculator"></i>
+                                <i th:if="${#strings.containsIgnoreCase(cat.categoryName, 'Other')}" class="bi bi-backpack2"></i>
+                            </div>
+                            <h6 class="fw-bold mb-1" th:text="${cat.categoryName}">Category</h6>
+                        </div>
+                        <span class="small text-secondary mt-2 d-inline-flex align-items-center">
+                            Explore <i class="bi bi-chevron-right ms-1" style="font-size: 0.75rem;"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================================
+         3. RECENTLY LISTED SECTION (FROM MYSQL DATABASE)
+         ====================================================================== -->
+    <section class="py-5">
+        <div class="container py-2">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4">
+                <div>
+                    <span class="text-uppercase fw-bold small" style="color: var(--emerald-600); letter-spacing: 0.06em;">Fresh on Campus</span>
+                    <h2 class="fw-bold mt-1 mb-0" style="letter-spacing: -0.02em;">Recently Listed Gear</h2>
+                </div>
+                <a th:href="@{/marketplace}" class="btn btn-soft btn-sm mt-2 mt-md-0">
+                    Browse All Listings <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-sm-6 col-lg-3" th:each="item : ${recentListings}">
+                    <div class="product-card">
+                        <a th:href="@{/listings/{id}(id=${item.listingId})}" class="product-img-wrapper d-block text-decoration-none">
+                            <img th:src="@{${item.resolvedImagePath}}" th:alt="${item.title}">
+                            <div class="position-absolute top-0 start-0 m-2 d-flex gap-1">
+                                <span class="swaped-badge" th:classappend="${item.itemCondition.badgeClass}" th:text="${item.itemCondition.displayName}">Condition</span>
+                            </div>
+                            <div class="position-absolute top-0 end-0 m-2">
+                                <span class="swaped-badge" th:classappend="${item.listingStatus.badgeClass}" th:text="${item.listingStatus.displayName}">Available</span>
+                            </div>
+                        </a>
+
+                        <div class="product-card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="course-pill" th:text="${item.courseCode}">UCS301</span>
+                                <span class="text-secondary small text-truncate ms-2" th:text="${item.category.categoryName}">Textbooks</span>
+                            </div>
+
+                            <a th:href="@{/listings/{id}(id=${item.listingId})}" class="product-title-link mb-1" th:text="${item.title}">Item Title</a>
+                            <div class="text-secondary small text-truncate mb-3" th:text="${item.courseName}">Course Name</div>
+
+                            <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="price-current" th:text="'₹' + ${#numbers.formatDecimal(item.sellingPrice, 1, 'COMMA', 0, 'POINT')}">₹480</span>
+                                    <span th:if="${item.originalPrice != null and item.originalPrice > item.sellingPrice}"
+                                          class="price-original ms-1"
+                                          th:text="'₹' + ${#numbers.formatDecimal(item.originalPrice, 1, 'COMMA', 0, 'POINT')}">₹995</span>
+                                </div>
+                                <a th:href="@{/listings/{id}(id=${item.listingId})}" class="btn btn-soft btn-sm py-1 px-2">
+                                    View <i class="bi bi-arrow-up-right"></i>
+                                </a>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-2 pt-1 text-secondary" style="font-size: 0.78rem;">
+                                <span><i class="bi bi-person me-1"></i><span th:text="${item.seller.fullName}">Seller</span></span>
+                                <span class="text-truncate ms-2" style="max-width: 115px;"><i class="bi bi-geo-alt me-1"></i><span th:text="${item.pickupLocation}">Library</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================================
+         4. HOW IT WORKS SECTION
+         ====================================================================== -->
+    <section id="how-it-works" class="py-5" style="background-color: var(--bg-secondary); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft);">
+        <div class="container py-3">
+            <div class="text-center mb-5">
+                <span class="text-uppercase fw-bold small" style="color: var(--emerald-600); letter-spacing: 0.06em;">Simple 4-Step Exchange</span>
+                <h2 class="fw-bold mt-1" style="letter-spacing: -0.02em;">How SwapEd Works</h2>
+                <p class="text-secondary mx-auto mb-0" style="max-width: 560px;">
+                    Designed around campus schedules—no shipping delays, no middlemen, and no platform commissions.
+                </p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="swaped-card p-4 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="category-icon-box mb-0"><i class="bi bi-search"></i></span>
+                            <span class="font-mono-code fw-bold text-secondary">STEP 01</span>
+                        </div>
+                        <h5 class="fw-bold">Browse Items</h5>
+                        <p class="text-secondary small mb-0">
+                            Explore textbooks, lab coats, calculators, and drafting kits listed by verified seniors and batchmates.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="swaped-card p-4 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="category-icon-box mb-0"><i class="bi bi-funnel"></i></span>
+                            <span class="font-mono-code fw-bold text-secondary">STEP 02</span>
+                        </div>
+                        <h5 class="fw-bold">Find What You Need</h5>
+                        <p class="text-secondary small mb-0">
+                            Filter by exact Thapar course code (e.g., <code>UCS301</code>, <code>UTA015</code>), item condition, and price range.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="swaped-card p-4 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="category-icon-box mb-0"><i class="bi bi-calendar2-check"></i></span>
+                            <span class="font-mono-code fw-bold text-secondary">STEP 03</span>
+                        </div>
+                        <h5 class="fw-bold">Reserve for Pickup</h5>
+                        <p class="text-secondary small mb-0">
+                            Place a one-click pickup reservation request. Once the seller accepts, the item is locked for you.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="swaped-card p-4 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="category-icon-box mb-0"><i class="bi bi-hand-thumbs-up"></i></span>
+                            <span class="font-mono-code fw-bold text-secondary">STEP 04</span>
+                        </div>
+                        <h5 class="fw-bold">Meet &amp; Complete Trade</h5>
+                        <p class="text-secondary small mb-0">
+                            Meet at the Central Library, COS Complex, or hostel gate, inspect the gear, and record the completed trade.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================================================
+         5. BENEFITS SECTION
+         ====================================================================== -->
+    <section class="py-5">
+        <div class="container py-3">
+            <div class="row align-items-center gy-4">
+                <div class="col-lg-5">
+                    <span class="text-uppercase fw-bold small" style="color: var(--emerald-600); letter-spacing: 0.06em;">Why Students Choose SwapEd</span>
+                    <h2 class="fw-bold mt-1 mb-3" style="letter-spacing: -0.02em;">Built for the Thapar Campus Community</h2>
+                    <p class="text-secondary mb-4">
+                        Every semester, hundreds of lab coats, mini drafters, and reference textbooks sit unused in hostel cupboards while juniors buy brand-new copies at full MRP. SwapEd closes the loop.
+                    </p>
+                    <a th:href="@{/auth/register}" sec:authorize="isAnonymous()" class="btn btn-emerald px-4">
+                        Join with @thapar.edu Email
+                    </a>
+                    <a th:href="@{/listings/new}" sec:authorize="isAuthenticated()" class="btn btn-emerald px-4">
+                        List Your First Item
+                    </a>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <div class="swaped-card p-4 h-100">
+                                <i class="bi bi-shield-lock-fill fs-4 text-success mb-2 d-block"></i>
+                                <h6 class="fw-bold">Student-Exclusive Marketplace</h6>
+                                <p class="text-secondary small mb-0">
+                                    Strict <code>@thapar.edu</code> email verification ensures every buyer and seller is a real student on campus.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="swaped-card p-4 h-100">
+                                <i class="bi bi-piggy-bank-fill fs-4 text-success mb-2 d-block"></i>
+                                <h6 class="fw-bold">Affordable Academic Essentials</h6>
+                                <p class="text-secondary small mb-0">
+                                    Save 45%–65% off bookstore prices on textbooks, scientific calculators, and electronics kits.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="swaped-card p-4 h-100">
+                                <i class="bi bi-geo-alt-fill fs-4 text-success mb-2 d-block"></i>
+                                <h6 class="fw-bold">Easy Campus Pickup</h6>
+                                <p class="text-secondary small mb-0">
+                                    Exchange items between lectures at familiar landmarks like Nava Nalanda Library, COS, or TAN Building.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="swaped-card p-4 h-100">
+                                <i class="bi bi-recycle fs-4 text-success mb-2 d-block"></i>
+                                <h6 class="fw-bold">Reuse and Reduce Waste</h6>
+                                <p class="text-secondary small mb-0">
+                                    Extend the lifecycle of durable engineering gear and keep quality academic books circulating across batches.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>

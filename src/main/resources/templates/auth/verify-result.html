@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Email Verification')}"></head>
+<body style="background-color: var(--bg-secondary);">
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-5">
+                <div class="swaped-card p-4 p-md-5 text-center">
+                    <div th:if="${verified}">
+                        <div class="category-icon-box mx-auto mb-3" style="width: 60px; height: 60px; font-size: 1.8rem;">
+                            <i class="bi bi-patch-check-fill"></i>
+                        </div>
+                        <h3 class="fw-bold mb-2">Email Verified!</h3>
+                        <p class="text-secondary mb-4" th:text="${message}">Your Thapar account is now active.</p>
+                        <a th:href="@{/auth/login(email=${studentEmail})}" class="btn btn-emerald w-100 py-2">
+                            Continue to Sign In <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+
+                    <div th:unless="${verified}">
+                        <div class="category-icon-box mx-auto mb-3" style="width: 60px; height: 60px; font-size: 1.8rem; background-color: #FEF2F2; color: #DC2626;">
+                            <i class="bi bi-x-octagon-fill"></i>
+                        </div>
+                        <h3 class="fw-bold mb-2">Verification Failed</h3>
+                        <p class="text-secondary mb-4" th:text="${message}">Verification link is invalid or expired.</p>
+                        <a th:href="@{/auth/login}" class="btn btn-soft w-100 py-2">Back to Sign In</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>
