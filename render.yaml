@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: swaped-campus-marketplace
+    runtime: docker
+    repo: https://github.com/AadityaBansal01/SwapEd
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: ALLOWED_EMAIL_DOMAIN
+        value: thapar.edu

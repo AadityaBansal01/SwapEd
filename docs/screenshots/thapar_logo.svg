@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 220" width="260" height="220">
+  <!-- Official-style TIET Emblem -->
+  <g transform="translate(80, 12)">
+    <!-- Vertical stem of 't' -->
+    <path d="M18 0 L42 0 L42 84 C42 96 48 102 60 102 L68 102 L68 122 L52 122 C28 122 18 108 18 84 Z" fill="#9E1B1E"/>
+    <!-- Crossbar of 't' -->
+    <rect x="6" y="34" width="54" height="18" rx="2" fill="#D32F2F"/>
+    <!-- Dot of 'i' -->
+    <circle cx="88" cy="14" r="13" fill="#9E1B1E"/>
+    <!-- Stem of 'i' -->
+    <rect x="76" y="36" width="24" height="86" rx="2" fill="#B71C1C"/>
+  </g>
+  <line x1="20" y1="152" x2="240" y2="152" stroke="#9E1B1E" stroke-width="1.5"/>
+  <text x="130" y="172" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="15.5" font-weight="bold" fill="#7F1D1D" letter-spacing="0.6">THAPAR INSTITUTE</text>
+  <text x="130" y="188" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="10.2" fill="#52525B" letter-spacing="0.4">OF ENGINEERING &amp; TECHNOLOGY</text>
+  <text x="130" y="203" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="10.5" font-style="italic" fill="#71717A">(Deemed to be University)</text>
+</svg>
