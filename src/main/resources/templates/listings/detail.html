@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head(${listing.title})}"></head>
+<body style="background-color: var(--bg-secondary);">
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<div th:replace="~{fragments/layout :: alerts}"></div>
+
+<main class="py-4 py-lg-5">
+    <div class="container">
+        <!-- Breadcrumb & Back Link -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 small">
+                    <li class="breadcrumb-item"><a th:href="@{/}" class="text-decoration-none text-secondary">Home</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/marketplace}" class="text-decoration-none text-secondary">Marketplace</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/marketplace(categoryId=${listing.category.categoryId})}" class="text-decoration-none text-secondary" th:text="${listing.category.categoryName}">Category</a></li>
+                    <li class="breadcrumb-item active text-dark fw-medium text-truncate" style="max-width: 220px;" aria-current="page" th:text="${listing.title}">Item</li>
+                </ol>
+            </nav>
+            <a th:href="@{/marketplace}" class="btn btn-soft btn-sm">
+                <i class="bi bi-arrow-left me-1"></i>Back to Marketplace
+            </a>
+        </div>
+
+        <div class="row g-4">
+            <!-- Left Column: Product Image Showcase -->
+            <div class="col-lg-6">
+                <div class="swaped-card overflow-hidden p-3 h-100 d-flex flex-column justify-content-between">
+                    <div class="rounded-3 overflow-hidden border position-relative" style="aspect-ratio: 4/3; background-color: #F4F6F8;">
+                        <img th:src="@{${listing.resolvedImagePath}}" th:alt="${listing.title}" class="w-100 h-100 object-fit-cover">
+                        <div class="position-absolute top-0 start-0 m-3 d-flex gap-2">
+                            <span class="swaped-badge" th:classappend="${listing.itemCondition.badgeClass}" th:text="${listing.itemCondition.displayName}">Condition</span>
+                        </div>
+                        <div class="position-absolute top-0 end-0 m-3">
+                            <span class="swaped-badge" th:classappend="${listing.listingStatus.badgeClass}" th:text="${listing.listingStatus.displayName}">Available</span>
+                        </div>
+                    </div>
+
+                    <div class="row g-2 mt-3 text-center">
+                        <div class="col-4">
+                            <div class="p-2 rounded-3 border bg-light">
+                                <div class="text-secondary" style="font-size: 0.72rem;">COURSE CODE</div>
+                                <div class="font-mono-code fw-bold small text-dark" th:text="${listing.courseCode}">UCS301</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 rounded-3 border bg-light">
+                                <div class="text-secondary" style="font-size: 0.72rem;">CONDITION</div>
+                                <div class="fw-bold small text-dark" th:text="${listing.itemCondition.displayName}">Like New</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 rounded-3 border bg-light">
+                                <div class="text-secondary" style="font-size: 0.72rem;">EXCHANGE MODE</div>
+                                <div class="fw-bold small text-success">Campus Pickup</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Product Specifications, Seller Info, and Reservation Controls -->
+            <div class="col-lg-6">
+                <div class="swaped-card p-4 p-md-5 h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                            <span class="course-pill" th:text="${listing.courseCode}">UCS301</span>
+                            <span class="badge bg-light text-secondary border fw-medium" th:text="${listing.category.categoryName}">Category</span>
+                            <span class="swaped-badge ms-auto" th:classappend="${listing.listingStatus.badgeClass}" th:text="${listing.listingStatus.displayName}">Available</span>
+                        </div>
+
+                        <h2 class="fw-bold mb-2" style="letter-spacing: -0.02em;" th:text="${listing.title}">Item Title</h2>
+                        <p class="text-secondary small mb-3">
+                            Course: <strong class="text-dark" th:text="${listing.courseName}">Course Name</strong>
+                            (<span class="font-mono-code" th:text="${listing.courseCode}">UCS301</span>)
+                        </p>
+
+                        <!-- Pricing Block -->
+                        <div class="p-3 rounded-3 mb-4 d-flex align-items-baseline gap-3" style="background-color: var(--bg-secondary); border: 1px solid var(--border-soft);">
+                            <div>
+                                <div class="text-secondary" style="font-size: 0.74rem; font-weight: 600;">SELLING PRICE</div>
+                                <span class="price-current fs-2" th:text="'₹' + ${#numbers.formatDecimal(listing.sellingPrice, 1, 'COMMA', 0, 'POINT')}">₹480</span>
+                            </div>
+                            <div th:if="${listing.originalPrice != null and listing.originalPrice > 0}">
+                                <div class="text-secondary" style="font-size: 0.74rem; font-weight: 600;">ORIGINAL MRP</div>
+                                <span class="price-original fs-5" th:text="'₹' + ${#numbers.formatDecimal(listing.originalPrice, 1, 'COMMA', 0, 'POINT')}">₹995</span>
+                            </div>
+                            <div th:if="${listing.discountPercentage > 0}" class="ms-auto">
+                                <span class="swaped-badge badge-condition-new" th:text="'Save ' + ${listing.discountPercentage} + '% off MRP'">Save 52%</span>
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold text-uppercase small text-secondary mb-2" style="letter-spacing: 0.05em;">Item Description &amp; Notes</h6>
+                            <p class="text-dark mb-0" style="white-space: pre-line;" th:text="${listing.description}">Description</p>
+                        </div>
+
+                        <!-- Metadata Grid: Pickup Location, Condition Details, Listing Date, Seller -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-sm-6">
+                                <div class="p-3 rounded-3 border bg-white h-100">
+                                    <div class="text-secondary small mb-1"><i class="bi bi-geo-alt-fill text-success me-1"></i>Campus Pickup Location</div>
+                                    <div class="fw-semibold small text-dark" th:text="${listing.pickupLocation}">Central Library Entrance</div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="p-3 rounded-3 border bg-white h-100">
+                                    <div class="text-secondary small mb-1"><i class="bi bi-calendar3 text-success me-1"></i>Listed On</div>
+                                    <div class="fw-semibold small text-dark" th:text="${#temporals.format(listing.createdAt, 'dd MMM yyyy, hh:mm a')}">18 Nov 2026</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Verified Seller Card -->
+                        <div class="p-3 rounded-3 border mb-4 d-flex align-items-center gap-3" style="background-color: var(--bg-secondary);">
+                            <div class="avatar-circle" th:text="${listing.seller.initials}">RJ</div>
+                            <div class="flex-grow-1">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="fw-bold text-dark" th:text="${listing.seller.fullName}">Seller Name</span>
+                                    <span class="badge rounded-pill" style="background-color: #ECFDF5; color: #065F46; font-size: 0.68rem;">
+                                        <i class="bi bi-patch-check-fill me-1"></i>Verified Student
+                                    </span>
+                                </div>
+                                <div class="text-secondary small" th:text="${listing.seller.course} + ' · ' + ${listing.seller.department}">
+                                    B.E. Computer Engineering · CSED
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons Section -->
+                    <div class="pt-3 border-top">
+                        <!-- Case 1: Logged-in Student is the Owner/Seller -->
+                        <div th:if="${isOwner}">
+                            <div class="alert alert-info small py-2 px-3 mb-3 border-0" style="background-color: #EFF6FF; color: #1E40AF;">
+                                <i class="bi bi-person-badge me-1"></i>You are the seller of this listing. Manage it below or review incoming reservation requests.
+                            </div>
+                            <div class="d-flex flex-wrap gap-2">
+                                <a th:if="${listing.listingStatus.name() != 'SOLD'}"
+                                   th:href="@{/listings/{id}/edit(id=${listing.listingId})}"
+                                   class="btn btn-emerald">
+                                    <i class="bi bi-pencil-square me-1"></i>Edit Listing
+                                </a>
+                                <a th:href="@{/dashboard/requests}" class="btn btn-soft">
+                                    <i class="bi bi-inbox me-1"></i>Reservation Requests
+                                </a>
+                                <form th:if="${listing.listingStatus.name() == 'AVAILABLE' or listing.listingStatus.name() == 'INACTIVE'}"
+                                      th:action="@{/listings/{id}/status(id=${listing.listingId})}" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-soft"
+                                            th:text="${listing.listingStatus.name() == 'AVAILABLE' ? 'Mark Unavailable' : 'Mark Available'}">
+                                        Toggle Availability
+                                    </button>
+                                </form>
+                                <a th:href="@{/marketplace}" class="btn btn-soft ms-auto">Back to Marketplace</a>
+                            </div>
+                        </div>
+
+                        <!-- Case 2: Logged-in Student is a Potential Buyer -->
+                        <div th:unless="${isOwner}" sec:authorize="isAuthenticated()">
+                            <div class="d-flex flex-wrap gap-2">
+                                <!-- Available and not yet requested -->
+                                <form th:if="${listing.available and !hasActiveReservationByUser}"
+                                      th:action="@{/reservations/create}" method="post" class="flex-grow-1">
+                                    <input type="hidden" name="listingId" th:value="${listing.listingId}">
+                                    <button type="submit" class="btn btn-emerald w-100 py-2">
+                                        <i class="bi bi-calendar2-check me-2"></i>Reserve for Pickup
+                                    </button>
+                                </form>
+
+                                <!-- Already requested by this user -->
+                                <a th:if="${hasActiveReservationByUser}"
+                                   th:href="@{/dashboard/reservations}"
+                                   class="btn btn-dark-green flex-grow-1 py-2">
+                                    <i class="bi bi-clock-history me-2"></i>Reservation Active — View in Dashboard
+                                </a>
+
+                                <!-- Unavailable to reserve -->
+                                <button th:if="${!listing.available and !hasActiveReservationByUser}"
+                                        type="button" class="btn btn-secondary flex-grow-1 py-2" disabled>
+                                    <i class="bi bi-lock me-1"></i>Currently <span th:text="${listing.listingStatus.displayName}">Unavailable</span>
+                                </button>
+
+                                <!-- Add / Remove Wishlist -->
+                                <form th:action="@{/wishlist/toggle}" method="post">
+                                    <input type="hidden" name="listingId" th:value="${listing.listingId}">
+                                    <button type="submit" class="btn btn-soft py-2 px-3">
+                                        <i class="bi me-1" th:classappend="${isWishlisted} ? 'bi-heart-fill text-danger' : 'bi-heart'"></i>
+                                        <span th:text="${isWishlisted ? 'Saved in Wishlist' : 'Add to Wishlist'}">Add to Wishlist</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Case 3: Unauthenticated Visitor -->
+                        <div sec:authorize="isAnonymous()">
+                            <div class="d-flex flex-wrap gap-2">
+                                <a th:href="@{/auth/login}" class="btn btn-emerald flex-grow-1 py-2">
+                                    <i class="bi bi-calendar2-check me-2"></i>Reserve for Pickup (Sign In Required)
+                                </a>
+                                <a th:href="@{/auth/login}" class="btn btn-soft py-2 px-3">
+                                    <i class="bi bi-heart me-1"></i>Add to Wishlist
+                                </a>
+                            </div>
+                            <div class="form-text small mt-2">
+                                <i class="bi bi-shield-check text-success me-1"></i>Only authenticated <code>@thapar.edu</code> students can reserve items or save to a wishlist.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>

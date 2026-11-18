@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Student Dashboard')}"></head>
+<body style="background-color: var(--bg-secondary);">
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<div th:replace="~{fragments/layout :: alerts}"></div>
+
+<main class="py-4 py-lg-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- ==============================================================
+                 LEFT SIDEBAR NAVIGATION
+                 ============================================================== -->
+            <div class="col-lg-3">
+                <div class="dashboard-sidebar sticky-lg-top" style="top: 88px;">
+                    <div class="d-flex align-items-center gap-3 p-2 mb-3 pb-3 border-bottom">
+                        <div class="avatar-circle" th:text="${student.initials}">RJ</div>
+                        <div class="overflow-hidden">
+                            <div class="fw-bold text-dark text-truncate" th:text="${student.fullName}">Student Name</div>
+                            <div class="text-secondary font-mono-code text-truncate" style="font-size: 0.75rem;" th:text="${student.email}">student@thapar.edu</div>
+                        </div>
+                    </div>
+
+                    <nav class="d-flex flex-column">
+                        <a th:href="@{/dashboard}" class="sidebar-nav-item" th:classappend="${activeTab == 'overview'} ? 'active'">
+                            <span><i class="bi bi-grid-1x2 me-2"></i>Overview</span>
+                        </a>
+                        <a th:href="@{/dashboard/listings}" class="sidebar-nav-item" th:classappend="${activeTab == 'listings'} ? 'active'">
+                            <span><i class="bi bi-box-seam me-2"></i>My Listings</span>
+                            <span class="badge rounded-pill bg-light text-dark border font-mono-code" th:text="${stats.totalListings}">0</span>
+                        </a>
+                        <a th:href="@{/dashboard/reservations}" class="sidebar-nav-item" th:classappend="${activeTab == 'reservations'} ? 'active'">
+                            <span><i class="bi bi-bookmark-check me-2"></i>My Reservations</span>
+                        </a>
+                        <a th:href="@{/dashboard/requests}" class="sidebar-nav-item" th:classappend="${activeTab == 'requests'} ? 'active'">
+                            <span><i class="bi bi-inbox me-2"></i>Reservation Requests</span>
+                            <span th:if="${stats.incomingPendingRequests > 0}"
+                                  class="badge rounded-pill bg-success text-white font-mono-code"
+                                  th:text="${stats.incomingPendingRequests}">1</span>
+                        </a>
+                        <a th:href="@{/dashboard/trades}" class="sidebar-nav-item" th:classappend="${activeTab == 'trades'} ? 'active'">
+                            <span><i class="bi bi-arrow-left-right me-2"></i>Completed Trades</span>
+                            <span class="badge rounded-pill bg-light text-dark border font-mono-code" th:text="${stats.completedTrades}">0</span>
+                        </a>
+                        <a th:href="@{/dashboard/wishlist}" class="sidebar-nav-item" th:classappend="${activeTab == 'wishlist'} ? 'active'">
+                            <span><i class="bi bi-heart me-2"></i>Wishlist</span>
+                            <span class="badge rounded-pill bg-light text-dark border font-mono-code" th:text="${stats.wishlistCount}">0</span>
+                        </a>
+                        <a th:href="@{/dashboard/profile}" class="sidebar-nav-item" th:classappend="${activeTab == 'profile'} ? 'active'">
+                            <span><i class="bi bi-person-gear me-2"></i>My Profile</span>
+                        </a>
+                    </nav>
+
+                    <hr class="my-3" style="border-color: var(--border-soft);">
+
+                    <form th:action="@{/auth/logout}" method="post" class="m-0">
+                        <button type="submit" class="btn btn-outline-danger btn-sm w-100 text-start px-3 py-2">
+                            <i class="bi bi-box-arrow-right me-2"></i>Logout
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ==============================================================
+                 RIGHT MAIN CONTENT AREA
+                 ============================================================== -->
+            <div class="col-lg-9">
+
+                <!-- Welcome Banner & 4 Database Stat Cards -->
+                <div class="swaped-card p-4 mb-4">
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+                        <div>
+                            <span class="text-uppercase fw-bold small" style="color: var(--emerald-600); letter-spacing: 0.06em;">Thapar Student Workspace</span>
+                            <h3 class="fw-bold mb-1" style="letter-spacing: -0.02em;">
+                                Welcome back, <span th:text="${student.fullName}">Student</span>!
+                            </h3>
+                            <p class="text-secondary small mb-0">
+                                Roll No: <span class="font-mono-code text-dark fw-semibold" th:text="${student.collegeId}">1024030782</span>
+                                &middot; <span th:text="${student.course}">B.E. Computer Engineering</span>
+                            </p>
+                        </div>
+                        <a th:href="@{/listings/new}" class="btn btn-emerald">
+                            <i class="bi bi-plus-lg me-1"></i>Sell an Item
+                        </a>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-6 col-md-3">
+                            <div class="stat-metric-card">
+                                <div class="text-secondary small fw-medium mb-1">Total Listings</div>
+                                <div class="stat-metric-value" th:text="${stats.totalListings}">0</div>
+                                <div class="text-secondary mt-1" style="font-size: 0.75rem;">Uploaded by you</div>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-md-3">
+                            <div class="stat-metric-card">
+                                <div class="text-secondary small fw-medium mb-1">Active Listings</div>
+                                <div class="stat-metric-value text-success" th:text="${stats.activeListings}">0</div>
+                                <div class="text-secondary mt-1" style="font-size: 0.75rem;">Available on campus</div>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-md-3">
+                            <div class="stat-metric-card">
+                                <div class="text-secondary small fw-medium mb-1">Pending Reservations</div>
+                                <div class="stat-metric-value" style="color: #D97706;" th:text="${stats.pendingReservations}">0</div>
+                                <div class="text-secondary mt-1" style="font-size: 0.75rem;">Incoming &amp; outgoing</div>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-md-3">
+                            <div class="stat-metric-card">
+                                <div class="text-secondary small fw-medium mb-1">Completed Trades</div>
+                                <div class="stat-metric-value" style="color: #2563EB;" th:text="${stats.completedTrades}">0</div>
+                                <div class="text-secondary mt-1" style="font-size: 0.75rem;">Verified exchanges</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================================
+                     TAB 1: OVERVIEW
+                     ========================================================== -->
+                <div th:if="${activeTab == 'overview'}">
+                    <!-- Incoming Requests Quick Panel -->
+                    <div class="swaped-card p-4 mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="fw-bold mb-0">Incoming Reservation Requests</h5>
+                            <a th:href="@{/dashboard/requests}" class="small text-decoration-none fw-semibold" style="color: var(--emerald-600);">View All</a>
+                        </div>
+
+                        <div th:if="${#lists.isEmpty(incomingRequests)}" class="text-secondary small py-3 text-center">
+                            No incoming reservation requests yet.
+                        </div>
+
+                        <div th:unless="${#lists.isEmpty(incomingRequests)}" class="table-responsive">
+                            <table class="table align-middle mb-0">
+                                <thead class="table-light small text-secondary">
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Buyer</th>
+                                        <th>Status</th>
+                                        <th class="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="req : ${incomingRequests}">
+                                        <td>
+                                            <a th:href="@{/listings/{id}(id=${req.listing.listingId})}" class="fw-semibold text-dark text-decoration-none" th:text="${req.listing.title}">Item</a>
+                                            <div class="small text-secondary font-mono-code" th:text="'₹' + ${req.listing.sellingPrice}">₹350</div>
+                                        </td>
+                                        <td>
+                                            <div class="fw-medium small" th:text="${req.buyer.fullName}">Buyer</div>
+                                            <div class="text-secondary" style="font-size: 0.75rem;" th:text="${req.buyer.email}">buyer@thapar.edu</div>
+                                        </td>
+                                        <td>
+                                            <span class="swaped-badge" th:classappend="${req.reservationStatus.badgeClass}" th:text="${req.reservationStatus.displayName}">Pending</span>
+                                        </td>
+                                        <td class="text-end">
+                                            <div th:if="${req.reservationStatus.name() == 'PENDING'}" class="d-inline-flex gap-1">
+                                                <form th:action="@{/reservations/{id}/accept(id=${req.reservationId})}" method="post" class="d-inline">
+                                                    <button type="submit" class="btn btn-emerald btn-sm py-1 px-2">Accept</button>
+                                                </form>
+                                                <form th:action="@{/reservations/{id}/reject(id=${req.reservationId})}" method="post" class="d-inline">
+                                                    <button type="submit" class="btn btn-soft btn-sm py-1 px-2 text-danger">Reject</button>
+                                                </form>
+                                            </div>
+                                            <div th:if="${req.reservationStatus.name() == 'ACCEPTED'}" class="d-inline-flex gap-1">
+                                                <form th:action="@{/trades/complete/{id}(id=${req.reservationId})}" method="post" class="d-inline">
+                                                    <button type="submit" class="btn btn-dark-green btn-sm py-1 px-2">
+                                                        <i class="bi bi-check2-all me-1"></i>Confirm Handover
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- My Recent Listings Quick Panel -->
+                    <div class="swaped-card p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="fw-bold mb-0">My Recent Listings</h5>
+                            <a th:href="@{/dashboard/listings}" class="small text-decoration-none fw-semibold" style="color: var(--emerald-600);">Manage All</a>
+                        </div>
+
+                        <div th:if="${#lists.isEmpty(myListings)}" class="text-secondary small py-3 text-center">
+                            You haven't uploaded any listings yet. <a th:href="@{/listings/new}" class="fw-semibold" style="color: var(--emerald-600);">Sell an item</a>.
+                        </div>
+
+                        <div th:unless="${#lists.isEmpty(myListings)}" class="table-responsive">
+                            <table class="table align-middle mb-0">
+                                <thead class="table-light small text-secondary">
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Course</th>
+                                        <th>Price</th>
+                                        <th>Status</th>
+                                        <th class="text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="item : ${myListings}">
+                                        <td>
+                                            <a th:href="@{/listings/{id}(id=${item.listingId})}" class="fw-semibold text-dark text-decoration-none" th:text="${item.title}">Item</a>
+                                        </td>
+                                        <td><span class="course-pill" th:text="${item.courseCode}">UCS301</span></td>
+                                        <td class="font-mono-code fw-bold" th:text="'₹' + ${item.sellingPrice}">₹480</td>
+                                        <td><span class="swaped-badge" th:classappend="${item.listingStatus.badgeClass}" th:text="${item.listingStatus.displayName}">Available</span></td>
+                                        <td class="text-end">
+                                            <a th:href="@{/listings/{id}(id=${item.listingId})}" class="btn btn-soft btn-sm py-1 px-2">View</a>
+                                            <a th:if="${item.listingStatus.name() != 'SOLD'}"
+                                               th:href="@{/listings/{id}/edit(id=${item.listingId})}"
+                                               class="btn btn-soft btn-sm py-1 px-2">Edit</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================================
+                     TAB 2: MY LISTINGS
+                     ========================================================== -->
+                <div th:if="${activeTab == 'listings'}" class="swaped-card p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h5 class="fw-bold mb-0">My Listings</h5>
+                            <p class="text-secondary small mb-0">Manage all textbooks and academic gear you have listed on SwapEd.</p>
+                        </div>
+                        <a th:href="@{/listings/new}" class="btn btn-emerald btn-sm">
+                            <i class="bi bi-plus-lg me-1"></i>New Listing
+                        </a>
+                    </div>
+
+                    <div th:if="${#lists.isEmpty(myListings)}" class="text-center py-5">
+                        <p class="text-secondary mb-3">You have not created any listings yet.</p>
+                        <a th:href="@{/listings/new}" class="btn btn-emerald">Create Your First Listing</a>
+                    </div>
+
+                    <div th:unless="${#lists.isEmpty(myListings)}" class="table-responsive">
+                        <table class="table align-middle mb-0">
+                            <thead class="table-light small text-secondary">
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Course</th>
+                                    <th>Condition</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="item : ${myListings}">
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <img th:src="@{${item.resolvedImagePath}}" alt="Item" class="rounded border" style="width: 48px; height: 36px; object-fit: cover;">
+                                            <div>
+                                                <a th:href="@{/listings/{id}(id=${item.listingId})}" class="fw-semibold text-dark text-decoration-none d-block" th:text="${item.title}">Title</a>
+                                                <span class="text-secondary" style="font-size: 0.75rem;" th:text="${item.pickupLocation}">Location</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="course-pill" th:text="${item.courseCode}">UCS301</span></td>
+                                    <td><span class="swaped-badge" th:classappend="${item.itemCondition.badgeClass}" th:text="${item.itemCondition.displayName}">Good</span></td>
+                                    <td class="font-mono-code fw-bold" th:text="'₹' + ${item.sellingPrice}">₹450</td>
+                                    <td><span class="swaped-badge" th:classappend="${item.listingStatus.badgeClass}" th:text="${item.listingStatus.displayName}">Available</span></td>
+                                    <td class="text-end">
+                                        <div class="d-inline-flex flex-wrap gap-1 justify-content-end">
+                                            <a th:href="@{/listings/{id}(id=${item.listingId})}" class="btn btn-soft btn-sm py-1 px-2">View</a>
+                                            <a th:if="${item.listingStatus.name() != 'SOLD'}"
+                                               th:href="@{/listings/{id}/edit(id=${item.listingId})}"
+                                               class="btn btn-soft btn-sm py-1 px-2">Edit</a>
+                                            <form th:if="${item.listingStatus.name() == 'AVAILABLE' or item.listingStatus.name() == 'INACTIVE'}"
+                                                  th:action="@{/listings/{id}/status(id=${item.listingId})}" method="post" class="d-inline">
+                                                <button type="submit" class="btn btn-soft btn-sm py-1 px-2"
+                                                        th:text="${item.listingStatus.name() == 'AVAILABLE' ? 'Mark Unavailable' : 'Mark Available'}">
+                                                    Mark Unavailable
+                                                </button>
+                                            </form>
+                                            <form th:if="${item.listingStatus.name() != 'SOLD'}"
+                                                  th:action="@{/listings/{id}/delete(id=${item.listingId})}" method="post" class="d-inline"
+                                                  onsubmit="return confirm('Delete this listing permanently?');">
+                                                <button type="submit" class="btn btn-soft btn-sm py-1 px-2 text-danger">Delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ==========================================================
+                     TAB 3: MY RESERVATIONS (AS BUYER)
+                     ========================================================== -->
+                <div th:if="${activeTab == 'reservations'}" class="swaped-card p-4">
+                    <div class="mb-3">
+                        <h5 class="fw-bold mb-0">My Reservations</h5>
+                        <p class="text-secondary small mb-0">Track items you have requested to reserve for campus pickup.</p>
+                    </div>
+
+                    <div th:if="${#lists.isEmpty(myReservations)}" class="text-center py-5">
+                        <p class="text-secondary mb-3">You haven't reserved any items yet.</p>
+                        <a th:href="@{/marketplace}" class="btn btn-emerald">Browse Marketplace</a>
+                    </div>
+
+                    <div th:unless="${#lists.isEmpty(myReservations)}" class="table-responsive">
+                        <table class="table align-middle mb-0">
+                            <thead class="table-light small text-secondary">
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Seller</th>
+                                    <th>Pickup Location</th>
+                                    <th>Request Date</th>
+                                    <th>Reservation Status</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="res : ${myReservations}">
+                                    <td>
+                                        <a th:href="@{/listings/{id}(id=${res.listing.listingId})}" class="fw-semibold text-dark text-decoration-none d-block" th:text="${res.listing.title}">Item</a>
+                                        <span class="font-mono-code small text-secondary" th:text="'₹' + ${res.listing.sellingPrice} + ' · ' + ${res.listing.courseCode}">₹450</span>
+                                    </td>
+                                    <td>
+                                        <div class="fw-medium small" th:text="${res.listing.seller.fullName}">Seller</div>
+                                        <div class="text-secondary font-mono-code" style="font-size: 0.74rem;" th:text="${res.listing.seller.email}">seller@thapar.edu</div>
+                                    </td>
+                                    <td class="small" th:text="${res.listing.pickupLocation}">Central Library</td>
+                                    <td class="small text-secondary" th:text="${#temporals.format(res.requestedAt, 'dd MMM yyyy, hh:mm a')}">18 Nov 2026</td>
+                                    <td>
+                                        <span class="swaped-badge" th:classappend="${res.reservationStatus.badgeClass}" th:text="${res.reservationStatus.displayName}">Pending</span>
+                                    </td>
+                                    <td class="text-end">
+                                        <form th:if="${res.reservationStatus.name() == 'PENDING' or res.reservationStatus.name() == 'ACCEPTED'}"
+                                              th:action="@{/reservations/{id}/cancel(id=${res.reservationId})}" method="post" class="d-inline">
+                                            <button type="submit" class="btn btn-soft btn-sm py-1 px-2 text-danger">Cancel</button>
+                                        </form>
+                                        <a th:href="@{/listings/{id}(id=${res.listing.listingId})}" class="btn btn-soft btn-sm py-1 px-2">View Item</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ==========================================================
+                     TAB 4: RESERVATION REQUESTS (AS SELLER)
+                     ========================================================== -->
+                <div th:if="${activeTab == 'requests'}" class="swaped-card p-4">
+                    <div class="mb-3">
+                        <h5 class="fw-bold mb-0">Incoming Reservation Requests</h5>
+                        <p class="text-secondary small mb-0">
+                            Accept or reject buyer pickup requests. Once you meet on campus and hand over the item, click <strong>Confirm Handover</strong> to record the trade.
+                        </p>
+                    </div>
+
+                    <div th:if="${#lists.isEmpty(incomingRequests)}" class="text-center py-5">
+                        <p class="text-secondary mb-0">No incoming reservation requests for your listings yet.</p>
+                    </div>
+
+                    <div th:unless="${#lists.isEmpty(incomingRequests)}" class="table-responsive">
+                        <table class="table align-middle mb-0">
+                            <thead class="table-light small text-secondary">
+                                <tr>
+                                    <th>Listing</th>
+                                    <th>Buyer Details</th>
+                                    <th>Pickup Spot</th>
+                                    <th>Requested</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Seller Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="req : ${incomingRequests}">
+                                    <td>
+                                        <a th:href="@{/listings/{id}(id=${req.listing.listingId})}" class="fw-semibold text-dark text-decoration-none d-block" th:text="${req.listing.title}">Item</a>
+                                        <span class="font-mono-code small text-secondary" th:text="'₹' + ${req.listing.sellingPrice}">₹350</span>
+                                    </td>
+                                    <td>
+                                        <div class="fw-semibold small" th:text="${req.buyer.fullName}">Buyer</div>
+                                        <div class="text-secondary font-mono-code" style="font-size: 0.74rem;" th:text="${req.buyer.email}">buyer@thapar.edu</div>
+                                    </td>
+                                    <td class="small" th:text="${req.listing.pickupLocation}">COS Complex</td>
+                                    <td class="small text-secondary" th:text="${#temporals.format(req.requestedAt, 'dd MMM yyyy')}">18 Nov 2026</td>
+                                    <td>
+                                        <span class="swaped-badge" th:classappend="${req.reservationStatus.badgeClass}" th:text="${req.reservationStatus.displayName}">Pending</span>
+                                    </td>
+                                    <td class="text-end">
+                                        <!-- PENDING: Accept or Reject -->
+                                        <div th:if="${req.reservationStatus.name() == 'PENDING'}" class="d-inline-flex gap-1">
+                                            <form th:action="@{/reservations/{id}/accept(id=${req.reservationId})}" method="post" class="d-inline">
+                                                <button type="submit" class="btn btn-emerald btn-sm py-1 px-2">
+                                                    <i class="bi bi-check-lg me-1"></i>Accept
+                                                </button>
+                                            </form>
+                                            <form th:action="@{/reservations/{id}/reject(id=${req.reservationId})}" method="post" class="d-inline">
+                                                <button type="submit" class="btn btn-soft btn-sm py-1 px-2 text-danger">
+                                                    <i class="bi bi-x-lg me-1"></i>Reject
+                                                </button>
+                                            </form>
+                                        </div>
+
+                                        <!-- ACCEPTED: Confirm Handover or Reject/Cancel -->
+                                        <div th:if="${req.reservationStatus.name() == 'ACCEPTED'}" class="d-inline-flex gap-1">
+                                            <form th:action="@{/trades/complete/{id}(id=${req.reservationId})}" method="post" class="d-inline">
+                                                <button type="submit" class="btn btn-dark-green btn-sm py-1 px-3">
+                                                    <i class="bi bi-bag-check-fill me-1"></i>Confirm Handover
+                                                </button>
+                                            </form>
+                                            <form th:action="@{/reservations/{id}/reject(id=${req.reservationId})}" method="post" class="d-inline">
+                                                <button type="submit" class="btn btn-soft btn-sm py-1 px-2 text-danger">Cancel</button>
+                                            </form>
+                                        </div>
+
+                                        <span th:if="${req.reservationStatus.name() == 'COMPLETED'}" class="small text-success fw-semibold">
+                                            <i class="bi bi-patch-check-fill me-1"></i>Trade Recorded
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ==========================================================
+                     TAB 5: COMPLETED TRADES (TRADE HISTORY)
+                     ========================================================== -->
+                <div th:if="${activeTab == 'trades'}" class="swaped-card p-4">
+                    <div class="mb-3">
+                        <h5 class="fw-bold mb-0">Completed Trades History</h5>
+                        <p class="text-secondary small mb-0">Verified campus exchanges in which you participated as buyer or seller.</p>
+                    </div>
+
+                    <div th:if="${#lists.isEmpty(trades)}" class="text-center py-5">
+                        <p class="text-secondary mb-0">No completed trades recorded for your account yet.</p>
+                    </div>
+
+                    <div th:unless="${#lists.isEmpty(trades)}" class="table-responsive">
+                        <table class="table align-middle mb-0">
+                            <thead class="table-light small text-secondary">
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Your Role</th>
+                                    <th>Buyer</th>
+                                    <th>Seller</th>
+                                    <th>Final Price</th>
+                                    <th>Completion Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="trade : ${trades}">
+                                    <td>
+                                        <a th:href="@{/listings/{id}(id=${trade.listing.listingId})}" class="fw-semibold text-dark text-decoration-none d-block" th:text="${trade.listing.title}">Item</a>
+                                        <span class="course-pill" th:text="${trade.listing.courseCode}">UMA004</span>
+                                    </td>
+                                    <td>
+                                        <span th:if="${trade.seller.studentId == student.studentId}" class="badge bg-dark">Seller</span>
+                                        <span th:if="${trade.buyer.studentId == student.studentId}" class="badge bg-success">Buyer</span>
+                                    </td>
+                                    <td>
+                                        <div class="small fw-medium" th:text="${trade.buyer.fullName}">Buyer</div>
+                                        <div class="text-secondary font-mono-code" style="font-size: 0.72rem;" th:text="${trade.buyer.email}"></div>
+                                    </td>
+                                    <td>
+                                        <div class="small fw-medium" th:text="${trade.seller.fullName}">Seller</div>
+                                        <div class="text-secondary font-mono-code" style="font-size: 0.72rem;" th:text="${trade.seller.email}"></div>
+                                    </td>
+                                    <td class="font-mono-code fw-bold" th:text="'₹' + ${trade.finalPrice}">₹780</td>
+                                    <td class="small text-secondary" th:text="${#temporals.format(trade.completedAt, 'dd MMM yyyy, hh:mm a')}">12 Nov 2026</td>
+                                    <td>
+                                        <span class="swaped-badge" th:classappend="${trade.tradeStatus.badgeClass}" th:text="${trade.tradeStatus.displayName}">Completed</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ==========================================================
+                     TAB 6: WISHLIST
+                     ========================================================== -->
+                <div th:if="${activeTab == 'wishlist'}" class="swaped-card p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h5 class="fw-bold mb-0">Saved Wishlist Items</h5>
+                            <p class="text-secondary small mb-0">Keep track of books and equipment you are interested in reserving.</p>
+                        </div>
+                        <a th:href="@{/marketplace}" class="btn btn-soft btn-sm">Explore More</a>
+                    </div>
+
+                    <div th:if="${#lists.isEmpty(wishlistItems)}" class="text-center py-5">
+                        <p class="text-secondary mb-3">Your wishlist is currently empty.</p>
+                        <a th:href="@{/marketplace}" class="btn btn-emerald">Explore Marketplace</a>
+                    </div>
+
+                    <div th:unless="${#lists.isEmpty(wishlistItems)}" class="row g-3">
+                        <div class="col-md-6" th:each="w : ${wishlistItems}">
+                            <div class="p-3 rounded-3 border bg-white d-flex gap-3 align-items-center">
+                                <img th:src="@{${w.listing.resolvedImagePath}}" alt="Item" class="rounded border" style="width: 78px; height: 62px; object-fit: cover;">
+                                <div class="flex-grow-1 overflow-hidden">
+                                    <div class="d-flex align-items-center gap-2 mb-1">
+                                        <span class="course-pill" th:text="${w.listing.courseCode}">UCS301</span>
+                                        <span class="swaped-badge" th:classappend="${w.listing.listingStatus.badgeClass}" th:text="${w.listing.listingStatus.displayName}">Available</span>
+                                    </div>
+                                    <a th:href="@{/listings/{id}(id=${w.listing.listingId})}" class="fw-bold text-dark text-decoration-none d-block text-truncate" th:text="${w.listing.title}">Item</a>
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <span class="price-current fs-6" th:text="'₹' + ${w.listing.sellingPrice}">₹480</span>
+                                        <div class="d-flex gap-1">
+                                            <a th:href="@{/listings/{id}(id=${w.listing.listingId})}" class="btn btn-emerald btn-sm py-1 px-2">View</a>
+                                            <form th:action="@{/wishlist/remove}" method="post" class="d-inline">
+                                                <input type="hidden" name="listingId" th:value="${w.listing.listingId}">
+                                                <button type="submit" class="btn btn-soft btn-sm py-1 px-2 text-danger" title="Remove">
+                                                    <i class="bi bi-trash3"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================================
+                     TAB 7: MY PROFILE
+                     ========================================================== -->
+                <div th:if="${activeTab == 'profile'}">
+                    <div class="row g-4">
+                        <div class="col-md-7">
+                            <div class="swaped-card p-4">
+                                <h5 class="fw-bold mb-1">Student Profile Details</h5>
+                                <p class="text-secondary small mb-4">Your verified Thapar email and Student ID are permanently linked to your campus identity.</p>
+
+                                <form th:action="@{/student/profile/update}" th:object="${profileDto}" method="post">
+                                    <div class="mb-3">
+                                        <label class="form-label">Official Thapar Email (Verified)</label>
+                                        <input type="text" class="form-control bg-light font-mono-code" th:value="${student.email}" readonly disabled>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Student ID / Roll Number</label>
+                                        <input type="text" class="form-control bg-light font-mono-code" th:value="${student.collegeId}" readonly disabled>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="profileFullName" class="form-label">Full Name</label>
+                                        <input type="text" id="profileFullName" th:field="*{fullName}" class="form-control" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="profileDepartment" class="form-label">Department</label>
+                                        <input type="text" id="profileDepartment" th:field="*{department}" class="form-control" required>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="profileCourse" class="form-label">Course / Program</label>
+                                        <input type="text" id="profileCourse" th:field="*{course}" class="form-control" required>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-emerald">Save Profile Changes</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="swaped-card p-4">
+                                <h5 class="fw-bold mb-1">Change Password</h5>
+                                <p class="text-secondary small mb-4">Update your account password securely with BCrypt hashing.</p>
+
+                                <form th:action="@{/student/password/change}" method="post">
+                                    <div class="mb-3">
+                                        <label for="currPass" class="form-label">Current Password</label>
+                                        <input type="password" id="currPass" name="currentPassword" class="form-control" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="newPass" class="form-label">New Password</label>
+                                        <input type="password" id="newPass" name="newPassword" class="form-control" placeholder="Min. 8 characters" required>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="confPass" class="form-label">Confirm New Password</label>
+                                        <input type="password" id="confPass" name="confirmPassword" class="form-control" required>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-dark-green w-100">Update Password</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>
