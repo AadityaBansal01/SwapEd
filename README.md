@@ -2,6 +2,9 @@
 
 **Your Campus. Your Marketplace.**
 
+🌐 **Live Production Website**: [https://swaped-campus-marketplace.onrender.com/](https://swaped-campus-marketplace.onrender.com/)  
+📄 **UCS553 Project Report (PDF)**: [SwapEd_UCS553_Project_Report.pdf](SwapEd_UCS553_Project_Report.pdf)
+
 SwapEd is a full-stack, student-exclusive campus marketplace built for **Thapar Institute of Engineering & Technology (TIET)** students to buy, sell, and exchange second-hand textbooks, lab coats, drawing & drafting tools, calculators, engineering equipment, and academic essentials.
 
 ---
